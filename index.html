@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>A Chai Date? ☕</title>
+
 <style>
   body {
     margin: 0;
@@ -14,7 +15,6 @@
     background-color: #fff;
   }
 
-  /* Background college images */
   .bg-layer {
     position: absolute;
     top: 0;
@@ -28,7 +28,6 @@
   .nit { left: 0; background-image: url('images/nit.jpeg'); }
   .du  { right: 0; background-image: url('images/du.jpg'); }
 
-  /* Main container */
   .container {
     position: relative;
     height: 100%;
@@ -63,19 +62,24 @@
 
   .before { background-color: #b33f3f; color: white; }
   .on     { background-color: #f2cfcf; color: #b33f3f; }
-  .after  { background-color: #f5d6d6; color: #b33f3f; position: absolute; transition: top 0.4s ease, left 0.4s ease; }
+  .after  { background-color: #f5d6d6; color: #b33f3f; position: absolute; }
   .option { background-color: #fde7e7; color: #b33f3f; }
 
   #response {
     margin-top: 20px;
     font-size: 17px;
     color: #333;
-    max-width: 300px;
+    max-width: 320px;
     opacity: 0;
     transition: opacity 0.6s ease;
   }
 
-  /* Floating tea cups */
+  .chosen {
+    font-weight: bold;
+    color: #b33f3f;
+    font-size: 18px;
+  }
+
   @keyframes floatCup {
     0% { transform: translateY(0) scale(0.7); opacity: 1; }
     100% { transform: translateY(-500px) scale(1); opacity: 0; }
@@ -88,6 +92,7 @@
   }
 </style>
 </head>
+
 <body>
 
 <div class="bg-layer nit"></div>
@@ -98,14 +103,14 @@
 
   <div id="mainOptions">
     <button class="before" onclick="beforeClicked()">Before 7th Feb ❤️</button>
-    <button class="on" id="onBtn" onclick="onClicked()"> 7th Feb Week 💌</button>
+    <button class="on" id="onBtn" onclick="onClicked()">7th Feb Week 💌</button>
     <button class="after" id="afterBtn">After 14th Feb 😉</button>
   </div>
 
-  <div id="subOptions" style="display: none;">
-    <button class="option" onclick="finalChoice('today')">Today ☕😌</button>
-    <button class="option" onclick="finalChoice('tomorrow')">Tomorrow ☕🙂</button>
-    <button class="option" onclick="finalChoice('dayafter')">Day after tomorrow ☕😉</button>
+  <div id="subOptions" style="display:none;">
+    <button class="option" onclick="finalChoice('Today ☕😌')">Today ☕😌</button>
+    <button class="option" onclick="finalChoice('Tomorrow ☕🙂')">Tomorrow ☕🙂</button>
+    <button class="option" onclick="finalChoice('Day after tomorrow ☕😉')">Day after tomorrow ☕😉</button>
   </div>
 
   <div id="response"></div>
@@ -118,9 +123,8 @@ const mainOptions = document.getElementById("mainOptions");
 const subOptions = document.getElementById("subOptions");
 const onBtn = document.getElementById("onBtn");
 
-/* Move "After 7th Feb" button playfully */
+/* playful moving button */
 function moveAfterButton() {
-  afterBtn.style.transform = "rotate(" + (Math.random()*20-10) + "deg)";
   const padding = 20;
   const maxX = window.innerWidth - afterBtn.offsetWidth - padding;
   const maxY = window.innerHeight - afterBtn.offsetHeight - padding;
@@ -131,7 +135,7 @@ afterBtn.addEventListener("mouseover", moveAfterButton);
 afterBtn.addEventListener("touchstart", moveAfterButton);
 moveAfterButton();
 
-/* Show messages with fade-in */
+/* fade message */
 function showMessage(msg) {
   response.style.opacity = 0;
   setTimeout(() => {
@@ -140,7 +144,6 @@ function showMessage(msg) {
   }, 300);
 }
 
-/* Button interactions */
 function onClicked() {
   showMessage("Are you sure? That’s a bit far 😔");
   setTimeout(() => {
@@ -156,17 +159,27 @@ function beforeClicked() {
   subOptions.style.display = "block";
 }
 
-function finalChoice(day) {
+function finalChoice(choiceText) {
   let extraMessage = "";
-  if (day === "today") extraMessage = "Hurry I need to come from Gurgaon 😅☕ (But body not at 100%) ";
-  else if (day === "tomorrow") extraMessage = "Okayyy 😌 but that’s like 24 hours!!! ☕";
-  else extraMessage = "Wow… patience level expert 😄☕";
 
-  showMessage("Oops 😅 I don’t actually get to know what you clicked…<br><br>Can you send me a screenshot please? or Call me up directly 🙈<br><br><em>" + extraMessage + "</em>");
+  if (choiceText.includes("Today"))
+    extraMessage = "Hurry I need to come from Gurgaon 😅☕";
+  else if (choiceText.includes("Tomorrow"))
+    extraMessage = "Okayyy 😌 but that’s like 24 hours!!! ☕";
+  else
+    extraMessage = "Wow… patience level expert 😄☕";
+
+  showMessage(
+    `You chose:<br>
+     <div class="chosen">${choiceText}</div>
+     <br>${extraMessage}<br><br>
+     Call me or text me — I’m already smiling 🙈`
+  );
+
   subOptions.style.display = "none";
 }
 
-/* Floating chai cups */
+/* floating cups */
 setInterval(() => {
   const cup = document.createElement("div");
   cup.className = "cup";
@@ -174,7 +187,8 @@ setInterval(() => {
   cup.innerHTML = "☕";
   document.body.appendChild(cup);
   setTimeout(() => cup.remove(), 4000);
-}, 800);
+}, 900);
 </script>
+
 </body>
 </html>
