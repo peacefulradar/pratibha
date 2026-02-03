@@ -20,3 +20,55 @@
     }
     h1 {
       color: red;
+      margin-bottom: 30px;
+    }
+    button {
+      padding: 12px 20px;
+      margin: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .before {
+      background-color: #ff4d4d;
+      color: white;
+    }
+    .after {
+      background-color: #ffd6d6;
+      color: red;
+    }
+    #response {
+      margin-top: 30px;
+      font-size: 18px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Will you go out on a date with me?</h1>
+
+    <button class="before" onclick="showResponse('before')">
+      Before 14th Feb ❤️
+    </button>
+
+    <button class="after" onclick="showResponse('after')">
+      After 14th Feb 😉
+    </button>
+
+    <div id="response"></div>
+  </div>
+
+  <script>
+    function showResponse(choice) {
+      const response = document.getElementById("response");
+      if (choice === "before") {
+        response.innerHTML = "Guess I should start planning something cute then 💫";
+      } else {
+        response.innerHTML = "Good things are worth waiting for… I’ll be patient 😊";
+      }
+    }
+  </script>
+</body>
+</html>
